@@ -1,26 +1,26 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/models/models.dart';
-import 'package:movies_app/providers/movies_providers.dart';
-import 'package:movies_app/widgets/widgets.dart';
+import 'package:games_app_ap/models/models.dart';
+import 'package:games_app_ap/providers/games_providers.dart';
+import 'package:games_app_ap/widgets/widgets.dart';
 
 
 class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Juego peli = ModalRoute.of(context)?.settings.arguments as Juego;
+    final Juego juego = ModalRoute.of(context)?.settings.arguments as Juego;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(peli: peli),
+          _CustomAppBar(juego: juego),
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                _PosterAndTitle(peli: peli),
-                _Overview(overview: peli.id),
-                _Plataforms(platforms: peli.platforms),
-                _Genres(genres: peli.genres),
+                _PosterAndTitle(juego: juego),
+                _Overview(overview: juego.id),
+                _Plataforms(platforms: juego.platforms),
+                _Genres(genres: juego.genres),
                  
               ],
             ),
@@ -32,9 +32,9 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  final Juego peli;
+  final Juego juego;
 
-  const _CustomAppBar({Key? key, required this.peli}) : super(key: key);
+  const _CustomAppBar({Key? key, required this.juego}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class _CustomAppBar extends StatelessWidget {
             fit: BoxFit.scaleDown,
             alignment: Alignment.bottomCenter,
             child: Text(
-              peli.name,
+              juego.name,
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -71,7 +71,7 @@ class _CustomAppBar extends StatelessWidget {
             autoPlayAnimationDuration: Duration(milliseconds: 800),
             viewportFraction: 0.8,
           ),
-          items: peli.shortScreenshots.map((screenshot) {
+          items: juego.shortScreenshots.map((screenshot) {
             return Builder(
               builder: (BuildContext context) {
                 return ClipRRect(
@@ -92,67 +92,47 @@ class _CustomAppBar extends StatelessWidget {
 
 
 class _PosterAndTitle extends StatelessWidget {
-  final Juego peli;
+  final Juego juego;
 
-  const _PosterAndTitle({Key? key, required this.peli}) : super(key: key);
+   const _PosterAndTitle({super.key, required this.juego});
 
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-
     return Container(
       margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              height: 200.0,
-              enlargeCenterPage: true,
-              autoPlay: true,
-              aspectRatio: 16 / 9,
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enableInfiniteScroll: true,
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              viewportFraction: 0.8,
-            ),
-            items: peli.shortScreenshots.map((screenshot) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      screenshot.image,
-                      fit: BoxFit.cover,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  juego.name,
+                  style: const TextStyle(fontSize: 22),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                Row(
+                  children: [
+                    const Icon(Icons.star_outline, size: 15, color: Colors.grey),
+                    const SizedBox(width: 5),
+                    Text(
+                      juego.rating.toString(),
+                      style: textTheme.caption,
                     ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                peli.name,
-                style: const TextStyle(fontSize: 22),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Row(
-                children: [
-                  const Icon(Icons.star_outline, size: 15, color: Colors.grey),
-                  const SizedBox(width: 5),
-                  Text(
-                    peli.rating.toString(),
-                    style: textTheme.caption,
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  ],
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -168,20 +148,19 @@ class _Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: MoviesProvider().getGameDetails(overview),
+      future: GamesProvider().getGameDetails(overview),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Mientras espera, puedes mostrar un indicador de carga
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          // En caso de error, puedes mostrar un mensaje de error
+
           return Text('Error: ${snapshot.error}');
         } else {
-          // Cuando la operación asincrónica está completa, muestra el resultado
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              snapshot.data ?? '', 
+               snapshot.data ?? '', 
               style: Theme.of(context).textTheme.subtitle1,
             ),
           );

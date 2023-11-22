@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/providers/movies_providers.dart';
-import 'package:movies_app/screens/screens.dart';
+import 'package:games_app_ap/providers/games_providers.dart';
+import 'package:games_app_ap/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(AppState());
@@ -11,7 +11,7 @@ class AppState extends StatelessWidget  {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ( _ ) => MoviesProvider()
+        ChangeNotifierProvider(create: ( _ ) => GamesProvider()
         )
       ],
       child: MyApp(),
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Pel·lícules',
+      title: 'Videojocs',
       initialRoute: 'home',
       routes: {
         'home': (BuildContext context) => HomeScreen(),

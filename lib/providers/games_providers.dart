@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:movies_app/models/gamesXbox.dart';
-import 'package:movies_app/models/gamesdecripcion.dart';
+import 'package:games_app_ap/models/gamesXbox.dart';
+import 'package:games_app_ap/models/gamesdecripcion.dart';
 
-import 'package:movies_app/models/gamesnintendo.dart';
+import 'package:games_app_ap/models/gamesnintendo.dart';
 
 
 import '../models/models.dart';
-export 'package:movies_app/models/games.dart';
+export 'package:games_app_ap/models/games.dart';
 
 
-class MoviesProvider extends ChangeNotifier {
+class GamesProvider extends ChangeNotifier {
   String _baseUrl = "api.rawg.io";
   String _apiKey = "6abbf87bff9740b5aa07f5cdeba26d92";
   String _dates = "2023-10-20,2023-11-20.";
@@ -21,14 +21,14 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Juego> OnGames = [];
   List<Juego> OnDisplayGame = [];
-  List<Juego> onDisplayPopularMovies = [];
+  List<Juego> OnDisplayNintendoGames = [];
    List<Juego> onDisplayXboxGames = [];
   List<Juego> onDisplayPlayGames = [];
 
 
 
 
-  MoviesProvider(){
+  GamesProvider(){
     print("Movies Provider iniciado");
     this.getOnDisplayGames();
     this.getOnDisplayNintendoGames();
@@ -70,7 +70,7 @@ Future<void> getOnDisplayGames() async {
 
       final nintendogames = Gamesnintendo.fromJson(result.body);
 
-      onDisplayPopularMovies = nintendogames.results;
+      OnDisplayNintendoGames = nintendogames.results;
 
       notifyListeners();
     } catch (error) {
@@ -110,9 +110,9 @@ Future<void> getOnDisplayGames() async {
     try {
       final result = await http.get(url);
 
-      final xboxgames = GamesXbox.fromJson(result.body);
+      final playgames = GamesXbox.fromJson(result.body);
 
-      onDisplayPlayGames = xboxgames.results;
+      onDisplayPlayGames = playgames.results;
 
       notifyListeners();
     } catch (error) {
@@ -120,7 +120,7 @@ Future<void> getOnDisplayGames() async {
     }
   }
 
-  Future<List<Juego>> getMoviesBySearch(String adult, String query) async {
+  Future<List<Juego>> getGamesBySearch(String adult, String query) async {
     print('Cercant pelis al servidor...');
     var url = Uri.https(_baseUrl, '/api/games', {
       'key': _apiKey,
@@ -146,7 +146,8 @@ Future<void> getOnDisplayGames() async {
   if (result.statusCode == 200) {
     final gameresponse = GamesDescripcion.fromJson(result.body);
    
-    final gamedescripcion = gameresponse.description.toString();
+    final gamedescripcion = gameresponse.descriptionRaw.toString();
+
     return gamedescripcion;
   } else {
     // Manejar el caso en el que la solicitud no sea exitosa
@@ -154,72 +155,4 @@ Future<void> getOnDisplayGames() async {
   }
 }
 
-
-
- /*getOnTopRatedMovies() async {
-    print('getOnTopRatedMovies');
-    var url = Uri.https(
-      _baseUrl,
-      '3/movie/top_rated',
-      {
-        'api_key': _apiKey,
-        'language': _language,
-        'page': _page,
-      },
-    );
-
-    // Await the http get response, then decode the json-formatted response.
-    final result = await http.get(url);
-
-    final topRatedResponse = TopRatedResponse.fromRawJson(result.body);
-
-    topRatedMovies = topRatedResponse.results;
-
-    notifyListeners();
-  }
-
-  getOnUpcomingMovies() async {
-    print('getOnUpcomingMovies');
-    var url = Uri.https(
-      _baseUrl,
-      '3/movie/upcoming',
-      {
-        'api_key': _apiKey,
-        'language': _language,
-        'page': _page,
-      },
-    );
-
-    // Await the http get response, then decode the json-formatted response.
-    final result = await http.get(url);
-
-    final upcomingResponse = UpcomingResponse.fromRawJson(result.body);
-
-    upcomingMovies = upcomingResponse.results;
-
-    notifyListeners();
-  }
-
-Future<List<Movie>> getMoviesBySearch(String adult, String query) async {
-    print('Cercant pelis al servidor...');
-    var url = Uri.https(
-      _baseUrl,
-      '3/search/movie',
-      {
-        'api_key': _apiKey,
-        'language': _language,
-        'page': _page,
-        'query': query,
-        'include_adult': adult
-      },
-    );
-
-    // Await the http get response, then decode the json-formatted response.
-    final result = await http.get(url);
-
-    final moviesBySearchResponse =
-        MoviesBySearchResponse.fromRawJson(result.body);
-
-    return moviesBySearchResponse.results;
-  }*/
 }

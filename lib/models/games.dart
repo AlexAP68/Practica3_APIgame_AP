@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:movies_app/models/models.dart';
+import 'package:games_app_ap/models/models.dart';
 
 class Games extends ChangeNotifier {
     int count;

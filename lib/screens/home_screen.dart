@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/providers/movies_providers.dart';
-import 'package:movies_app/widgets/search.dart';
-import 'package:movies_app/widgets/widgets.dart';
+import 'package:games_app_ap/providers/games_providers.dart';
+import 'package:games_app_ap/widgets/card_swiper.dart';
+import 'package:games_app_ap/widgets/movie_slider.dart';
+import 'package:games_app_ap/widgets/search.dart';
+import 'package:games_app_ap/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final moviesProvider = Provider.of<MoviesProvider>(context);
+    final gamesProvider = Provider.of<GamesProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cartellera'),
+        title: const Text('Videojocs'),
         elevation: 0,
         actions: [
           IconButton(onPressed: () {
                showSearch(
                 context: context,
-                delegate: Search(context, moviesProvider.OnDisplayGame),
+                delegate: Search(context, gamesProvider.OnDisplayGame),
               );
               }, icon: const Icon(Icons.search_outlined))
         ],
@@ -26,21 +28,20 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               // Targetes principals
-              CardSwiper(movies: moviesProvider.OnDisplayGame),
+              CardSwiper(juegos: gamesProvider.OnDisplayGame),
 
               // Slider de pel·licules
               MovieSlider(
-                  nom: 'Popular Last 30 days', movies: moviesProvider.OnDisplayGame),
-              // Poodeu fer la prova d'afegir-ne uns quants, veureu com cada llista és independent
+                  nom: 'Popular Last 30 days', juegos: gamesProvider.OnDisplayGame),
               const SizedBox(height: 20),
               MovieSlider(
-                  nom: 'Popular Nintendo switch', movies: moviesProvider.onDisplayPopularMovies),
+                  nom: 'Popular Nintendo switch', juegos: gamesProvider.OnDisplayNintendoGames),
               const SizedBox(height: 20),
               MovieSlider(
-                  nom: 'Popular Xbox', movies: moviesProvider.onDisplayXboxGames),
+                  nom: 'Popular Xbox', juegos: gamesProvider.onDisplayXboxGames),
                   const SizedBox(height: 20),
               MovieSlider(
-                  nom: 'Popular Play', movies: moviesProvider.onDisplayPlayGames),
+                  nom: 'Popular Play', juegos: gamesProvider.onDisplayPlayGames),
             ],
           ),
         ),

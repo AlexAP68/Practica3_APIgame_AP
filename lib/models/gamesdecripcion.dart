@@ -17,7 +17,7 @@ class GamesDescripcion {
     double rating;
     int ratingTop;
     List<Rating> ratings;
-    Reactions reactions;
+    Reactions? reactions;
     int added;
     AddedByStatus addedByStatus;
     int playtime;
@@ -135,7 +135,8 @@ class GamesDescripcion {
         rating: json["rating"]?.toDouble(),
         ratingTop: json["rating_top"],
         ratings: List<Rating>.from(json["ratings"].map((x) => Rating.fromMap(x))),
-        reactions: Reactions.fromMap(json["reactions"]),
+        reactions: json["reactions"] != null ? Reactions.fromMap(json["reactions"]) : Reactions(),
+
         added: json["added"],
         addedByStatus: AddedByStatus.fromMap(json["added_by_status"]),
         playtime: json["playtime"],
@@ -193,7 +194,7 @@ class GamesDescripcion {
         "rating": rating,
         "rating_top": ratingTop,
         "ratings": List<dynamic>.from(ratings.map((x) => x.toMap())),
-        "reactions": reactions.toMap(),
+        "reactions": reactions?.toMap(),
         "added": added,
         "added_by_status": addedByStatus.toMap(),
         "playtime": playtime,
@@ -237,10 +238,10 @@ class GamesDescripcion {
 class AddedByStatus {
     int yet;
     int owned;
-    int beaten;
+    int? beaten;
     int toplay;
-    int dropped;
-    int playing;
+    int? dropped;
+    int? playing;
 
     AddedByStatus({
         required this.yet,
@@ -279,7 +280,7 @@ class Developer {
     String name;
     String slug;
     int gamesCount;
-    String imageBackground;
+    String?  imageBackground;
 
     Developer({
         required this.id,
@@ -569,25 +570,25 @@ class Reactions {
     int? the21;
 
     Reactions({
-        required this.the1,
-        required this.the2,
-        required this.the3,
-        required this.the4,
-        required this.the5,
-        required this.the6,
-        required this.the7,
-        required this.the8,
-        required this.the9,
-        required this.the10,
-        required this.the11,
-        required this.the12,
-        required this.the13,
-        required this.the14,
-        required this.the15,
-        required this.the16,
-        required this.the18,
-        required this.the20,
-        required this.the21,
+         this.the1,
+         this.the2,
+         this.the3,
+         this.the4,
+         this.the5,
+         this.the6,
+         this.the7,
+         this.the8,
+         this.the9,
+         this.the10,
+         this.the11,
+         this.the12,
+         this.the13,
+         this.the14,
+         this.the15,
+         this.the16,
+         this.the18,
+         this.the20,
+         this.the21,
     });
 
     factory Reactions.fromJson(String str) => Reactions.fromMap(json.decode(str));

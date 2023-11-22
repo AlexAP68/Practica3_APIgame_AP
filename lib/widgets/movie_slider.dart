@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/models/models.dart';
+import 'package:games_app_ap/models/models.dart';
 
 class MovieSlider extends StatelessWidget {
-  final List<Juego> movies;
+  final List<Juego> juegos;
   final String nom;
 
-  const MovieSlider({super.key, required this.movies, required this.nom});
+  const MovieSlider({super.key, required this.juegos, required this.nom});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,9 @@ class MovieSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: movies.length,
+                itemCount: juegos.length,
                 itemBuilder: (_, int index) => _MoviePoster(
-                      movie: movies[index],
+                      juego: juegos[index],
                     )),
           )
         ],
@@ -39,9 +39,9 @@ class MovieSlider extends StatelessWidget {
 }
 
 class _MoviePoster extends StatelessWidget {
-  final Juego movie;
+  final Juego juego;
 
-  const _MoviePoster({super.key, required this.movie});
+  const _MoviePoster({super.key, required this.juego});
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +53,12 @@ class _MoviePoster extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () =>
-                Navigator.pushNamed(context, 'details', arguments: movie),
+                Navigator.pushNamed(context, 'details', arguments: juego),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
                 placeholder: const AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(movie.IconImage),
+                image: NetworkImage(juego.IconImage),
                 width: 130,
                 height: 190,
                 fit: BoxFit.contain,
@@ -69,7 +69,7 @@ class _MoviePoster extends StatelessWidget {
             height: 5,
           ),
           Text(
-            movie.name,
+            juego.name,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

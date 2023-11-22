@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/models/models.dart';
+import 'package:games_app_ap/models/models.dart';
 
-import 'package:movies_app/providers/movies_providers.dart';
+import 'package:games_app_ap/providers/games_providers.dart';
 import 'package:provider/provider.dart';
 
 class Search extends SearchDelegate {
@@ -34,9 +34,9 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final moviesProvider = Provider.of<MoviesProvider>(_context, listen: false);
+    final gamesProvider = Provider.of<GamesProvider>(_context, listen: false);
     return FutureBuilder(
-      future: moviesProvider.getMoviesBySearch("true", query),
+      future: gamesProvider.getGamesBySearch("true", query),
       builder: (BuildContext context, AsyncSnapshot<List<Juego>> snapshot) {
         if (!snapshot.hasData) {
           return Container(
@@ -70,9 +70,9 @@ class Search extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     List<Juego> matchQuery = [];
 
-    for (var movie in juegos) {
-      if (movie.name.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(movie);
+    for (var juego in juegos) {
+      if (juego.name.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(juego);
       }
     }
 

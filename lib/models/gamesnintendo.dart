@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:movies_app/models/models.dart';
+import 'package:games_app_ap/models/models.dart';
 
 class Gamesnintendo {
     int count;
