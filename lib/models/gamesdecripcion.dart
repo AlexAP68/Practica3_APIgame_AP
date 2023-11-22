@@ -2,18 +2,18 @@ import 'dart:convert';
 
 class GamesDescripcion {
     int id;
-    String slug;
-    String name;
-    String nameOriginal;
-    String description;
+    String? slug;
+    String? name;
+    String? nameOriginal;
+    String? description;
     int? metacritic;
-    List<MetacriticPlatform> metacriticPlatforms;
-    DateTime released;
+    List<MetacriticPlatform>? metacriticPlatforms;
+    DateTime? released;
     bool tba;
-    String updated;
-    String backgroundImage;
-    String backgroundImageAdditional;
-    String website;
+    String? updated;
+    String? backgroundImage;
+    String? backgroundImageAdditional;
+    String? website;
     double rating;
     int ratingTop;
     List<Rating> ratings;
@@ -26,25 +26,25 @@ class GamesDescripcion {
     int creatorsCount;
     int achievementsCount;
     int parentAchievementsCount;
-    String redditUrl;
-    String redditName;
-    String redditDescription;
-    String redditLogo;
+    String? redditUrl;
+    String? redditName;
+    String? redditDescription;
+    String? redditLogo;
     int redditCount;
     int twitchCount;
     int youtubeCount;
     int reviewsTextCount;
     int ratingsCount;
     int suggestionsCount;
-    List<String> alternativeNames;
-    String metacriticUrl;
+    List<String>? alternativeNames;
+    String? metacriticUrl;
     int parentsCount;
     int additionsCount;
     int gameSeriesCount;
     dynamic userGame;
     int reviewsCount;
-    String saturatedColor;
-    String dominantColor;
+    String? saturatedColor;
+    String? dominantColor;
     List<ParentPlatform> parentPlatforms;
     List<PlatformElement> platforms;
     List<StoreElement> stores;
@@ -52,9 +52,9 @@ class GamesDescripcion {
     List<Developer> genres;
     List<Tag> tags;
     List<Developer> publishers;
-    EsrbRating esrbRating;
+    EsrbRating? esrbRating;
     dynamic clip;
-    String descriptionRaw;
+    String? descriptionRaw;
 
     GamesDescripcion({
         required this.id,
@@ -125,7 +125,8 @@ class GamesDescripcion {
         description: json["description"],
         metacritic: json["metacritic"],
         metacriticPlatforms: List<MetacriticPlatform>.from(json["metacritic_platforms"].map((x) => MetacriticPlatform.fromMap(x))),
-        released: DateTime.parse(json["released"]),
+        released: json["released"] != null ? DateTime.parse(json["released"]) : null,
+
         tba: json["tba"],
         updated: json["updated"],
         backgroundImage: json["background_image"],
@@ -169,7 +170,8 @@ class GamesDescripcion {
         genres: List<Developer>.from(json["genres"].map((x) => Developer.fromMap(x))),
         tags: List<Tag>.from(json["tags"].map((x) => Tag.fromMap(x))),
         publishers: List<Developer>.from(json["publishers"].map((x) => Developer.fromMap(x))),
-        esrbRating: EsrbRating.fromMap(json["esrb_rating"]),
+        esrbRating: json["esrb_rating"] != null ? EsrbRating.fromMap(json["esrb_rating"]) : null,
+
         clip: json["clip"],
         descriptionRaw: json["description_raw"],
     );
@@ -181,8 +183,8 @@ class GamesDescripcion {
         "name_original": nameOriginal,
         "description": description,
         "metacritic": metacritic,
-        "metacritic_platforms": List<dynamic>.from(metacriticPlatforms.map((x) => x.toMap())),
-        "released": "${released.year.toString().padLeft(4, '0')}-${released.month.toString().padLeft(2, '0')}-${released.day.toString().padLeft(2, '0')}",
+        "metacritic_platforms": List<dynamic>.from(metacriticPlatforms!.map((x) => x.toMap())),
+        "released": "${released?.year.toString().padLeft(4, '0')}-${released?.month.toString().padLeft(2, '0')}-${released?.day.toString().padLeft(2, '0')}",
         "tba": tba,
         "updated": updated,
         "background_image": backgroundImage,
@@ -210,7 +212,7 @@ class GamesDescripcion {
         "reviews_text_count": reviewsTextCount,
         "ratings_count": ratingsCount,
         "suggestions_count": suggestionsCount,
-        "alternative_names": List<dynamic>.from(alternativeNames.map((x) => x)),
+        "alternative_names": List<dynamic>.from(alternativeNames!.map((x) => x)),
         "metacritic_url": metacriticUrl,
         "parents_count": parentsCount,
         "additions_count": additionsCount,
@@ -226,7 +228,7 @@ class GamesDescripcion {
         "genres": List<dynamic>.from(genres.map((x) => x.toMap())),
         "tags": List<dynamic>.from(tags.map((x) => x.toMap())),
         "publishers": List<dynamic>.from(publishers.map((x) => x.toMap())),
-        "esrb_rating": esrbRating.toMap(),
+        "esrb_rating": esrbRating?.toMap(),
         "clip": clip,
         "description_raw": descriptionRaw,
     };
@@ -414,7 +416,7 @@ class ParentPlatform {
 
 class PlatformElement {
     PlatformPlatform platform;
-    DateTime releasedAt;
+    DateTime? releasedAt;
     Requirements requirements;
 
     PlatformElement({
@@ -429,13 +431,14 @@ class PlatformElement {
 
     factory PlatformElement.fromMap(Map<String, dynamic> json) => PlatformElement(
         platform: PlatformPlatform.fromMap(json["platform"]),
-        releasedAt: DateTime.parse(json["released_at"]),
+        releasedAt: json["released_at"] != null ? DateTime.parse(json["released_at"]) : null,
+
         requirements: Requirements.fromMap(json["requirements"]),
     );
 
     Map<String, dynamic> toMap() => {
         "platform": platform.toMap(),
-        "released_at": "${releasedAt.year.toString().padLeft(4, '0')}-${releasedAt.month.toString().padLeft(2, '0')}-${releasedAt.day.toString().padLeft(2, '0')}",
+        "released_at": "${releasedAt?.year.toString().padLeft(4, '0')}-${releasedAt?.month.toString().padLeft(2, '0')}-${releasedAt?.day.toString().padLeft(2, '0')}",
         "requirements": requirements.toMap(),
     };
 }
