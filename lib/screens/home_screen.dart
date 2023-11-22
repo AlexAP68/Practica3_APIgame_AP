@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:games_app_ap/providers/games_providers.dart';
-import 'package:games_app_ap/widgets/card_swiper.dart';
-import 'package:games_app_ap/widgets/movie_slider.dart';
-import 'package:games_app_ap/widgets/search.dart';
 import 'package:games_app_ap/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +12,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Videojocs'),
         elevation: 0,
         actions: [
+          //el buscador
           IconButton(onPressed: () {
                showSearch(
                 context: context,
@@ -27,10 +25,10 @@ class HomeScreen extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
-              // Targetes principals
+              // Tarjeta principal de los juegos populares(30 dias)
               CardSwiper(juegos: gamesProvider.OnDisplayGame),
 
-              // Slider de pel·licules
+              // Slider de diferentes videojuegos
               MovieSlider(
                   nom: 'Popular Last 30 days', juegos: gamesProvider.OnDisplayGame),
               const SizedBox(height: 20),

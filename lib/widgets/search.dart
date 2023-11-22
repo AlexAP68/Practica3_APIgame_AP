@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:games_app_ap/models/models.dart';
-
 import 'package:games_app_ap/providers/games_providers.dart';
 import 'package:provider/provider.dart';
 

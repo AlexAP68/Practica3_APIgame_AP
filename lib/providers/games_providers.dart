@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:games_app_ap/models/gamesdecripcion.dart';
 import 'package:http/http.dart' as http;
 import 'package:games_app_ap/models/gamesXbox.dart';
-import 'package:games_app_ap/models/gamesdecripcion.dart';
-
-import 'package:games_app_ap/models/gamesnintendo.dart';
-
-
 import '../models/models.dart';
-export 'package:games_app_ap/models/games.dart';
+
 
 
 class GamesProvider extends ChangeNotifier {
@@ -36,7 +31,7 @@ class GamesProvider extends ChangeNotifier {
     this.getOnDisplayPlayGames();
   }
 
-
+//Buscar los juegos populares de los ultimos 30 dias(2023-10-20,2023-11-20.)
 Future<void> getOnDisplayGames() async {
     print('getOnDisplayMovies');
     var url = Uri.https(_baseUrl, '/api/games', {
@@ -56,7 +51,7 @@ Future<void> getOnDisplayGames() async {
       print('Error en getOnDisplayMovies: $error');
     }
   }
-
+//Buscar los juegos populares de nintendo del 2023
   Future<void> getOnDisplayNintendoGames() async {
     print('getOnPopularsMovies');
     var url = Uri.https(_baseUrl, '/api/games', {
@@ -77,7 +72,7 @@ Future<void> getOnDisplayGames() async {
       print('Error en getOnDisplayPopularMovies: $error');
     }
   }
-
+//Buscar los juegos populares de Xbox del 2023
     Future<void> getOnDisplayXboxGames() async {
     print('getOnXboxGames');
     var url = Uri.https(_baseUrl, '/api/games', {
@@ -98,7 +93,7 @@ Future<void> getOnDisplayGames() async {
       print('Error en getOnXboxGames: $error');
     }
   }
-
+//Buscar los juegos populares de playstation del 2023
     Future<void> getOnDisplayPlayGames() async {
     print('getOnPlayGames');
     var url = Uri.https(_baseUrl, '/api/games', {
@@ -119,7 +114,7 @@ Future<void> getOnDisplayGames() async {
       print('Error en getOnPlayGames: $error');
     }
   }
-
+//Buscador de los juegos populares
   Future<List<Juego>> getGamesBySearch(String adult, String query) async {
     print('Cercant pelis al servidor...');
     var url = Uri.https(_baseUrl, '/api/games', {
@@ -127,14 +122,14 @@ Future<void> getOnDisplayGames() async {
       'dates': _dates,
     });
 
-    // Await the http get response, then decode the json-formatted response.
+
     final result = await http.get(url);
 
     final moviesBySearchResponse =Games.fromJson(result.body);
 
     return moviesBySearchResponse.result;
   }
-
+//Buscar la descripcion del juego
   Future<String> getGameDetails(int gameId) async {
   print('Fetching game details');
   var url = Uri.https(_baseUrl, '/api/games/$gameId', {
@@ -150,7 +145,6 @@ Future<void> getOnDisplayGames() async {
 
     return gamedescripcion;
   } else {
-    // Manejar el caso en el que la solicitud no sea exitosa
     throw Exception('Failed to load game details');
   }
 }

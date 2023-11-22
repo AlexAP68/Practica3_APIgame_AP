@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:games_app_ap/models/models.dart';
 import 'package:games_app_ap/providers/games_providers.dart';
-import 'package:games_app_ap/widgets/widgets.dart';
+
 
 
 class DetailsScreen extends StatelessWidget {
@@ -30,7 +30,7 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 }
-
+//Portada con carrusel
 class _CustomAppBar extends StatelessWidget {
   final Juego juego;
 
@@ -90,7 +90,7 @@ class _CustomAppBar extends StatelessWidget {
   }
 }
 
-
+//Titulo del juego
 class _PosterAndTitle extends StatelessWidget {
   final Juego juego;
 
@@ -139,7 +139,7 @@ class _PosterAndTitle extends StatelessWidget {
   }
 }
 
-
+//Descripcion del juego
 class _Overview extends StatelessWidget {
   final int overview;
 
@@ -148,10 +148,11 @@ class _Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      //Llamamos a provider que es donde esta la funcion de buscar la descripcion
       future: GamesProvider().getGameDetails(overview),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // Mientras espera, puedes mostrar un indicador de carga
+          // Mientras espera, muestra un indicador de carga
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
 
@@ -170,7 +171,7 @@ class _Overview extends StatelessWidget {
   }
 }
 
-
+//Las plataformas que ha salido el juego
 class _Plataforms extends StatelessWidget {
   final List<Platform> platforms;
 
@@ -204,7 +205,7 @@ class _Plataforms extends StatelessWidget {
   }
 }
 
-
+//Los generos de los juegos
 class _Genres extends StatelessWidget {
   final List<Genre> genres;
 

@@ -67,24 +67,24 @@ class Juego {
         this.communityRating,
     });
 
-        String get IconImage {
-  final String? originalImageUrl = this.backgroundImage;
-  final List<String> characters = originalImageUrl?.split("/") ?? [];
-  final defaultImageUrl = "https://i.stack.imgur.com/GNhx0.png";
+  String get IconImage {
+    final String? originalImageUrl = this.backgroundImage;
+    final List<String> characters = originalImageUrl?.split("/") ?? [];
+    final defaultImageUrl = "https://i.stack.imgur.com/GNhx0.png";
 
-  if (originalImageUrl != null && characters.length >= 7) {
-    try {
-      // Redimensionar la imagen a 500x800 píxeles
-      final resizedImageUrl = "${characters[0]}/${characters[1]}/${characters[2]}/${characters[3]}/resize/420/-/${characters[4]}/${characters[5]}/${characters[6]}";
-      return resizedImageUrl;
-    } catch (e) {
-      print("Error al redimensionar la imagen: $e");
-      return defaultImageUrl;
+    if (originalImageUrl != null && characters.length >= 7) {
+        try {
+          // Redimensionar la imagen 
+          final resizedImageUrl = "${characters[0]}/${characters[1]}/${characters[2]}/${characters[3]}/resize/420/-/${characters[4]}/${characters[5]}/${characters[6]}";
+          return resizedImageUrl;
+        } catch (e) {
+          print("Error al redimensionar la imagen: $e");
+          return defaultImageUrl;
+        }
+    } else {
+        // Si no hay imagen o la URL no tiene la estructura esperada, devuelve la imagen predeterminada
+        return defaultImageUrl;
     }
-  } else {
-    // Si no hay imagen o la URL no tiene la estructura esperada, devuelve la imagen predeterminada
-    return defaultImageUrl;
-  }
 }
 
     factory Juego.fromJson(String str) => Juego.fromMap(json.decode(str));
